@@ -95,7 +95,9 @@ module OpenApi
         form data: { name => schema }
       end
 
-      def response code, desc, media_type = nil, headers: { }, data: { }, **options
+      def response(code, desc, media_type = nil, options)
+        headers = options[:headers] || {}
+        data = options[:data] || {}
         (self[:responses][code.to_s] ||= ResponseObj.new(desc)).absorb(desc, media_type, headers: headers, data: data, **options)
       end
 
